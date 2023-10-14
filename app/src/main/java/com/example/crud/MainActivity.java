@@ -1,14 +1,16 @@
 package com.example.crud;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+
 
 public class MainActivity extends AppCompatActivity {
     private EditText txtReg;
@@ -17,6 +19,12 @@ public class MainActivity extends AppCompatActivity {
     private Button btnActualizar;
     private TextView txtResultado;
     private CrudRol crudRol;
+
+
+    public void btnMainSocio(View view){
+        Intent intent=new Intent(MainActivity.this,socio.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

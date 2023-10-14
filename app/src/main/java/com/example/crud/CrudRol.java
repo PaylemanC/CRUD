@@ -8,6 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 public class CrudRol extends MRSQLiteHelper {
     Context context;
 
+    public SQLiteDatabase returnDb() {
+        MRSQLiteHelper usdbh = new MRSQLiteHelper(context);
+        SQLiteDatabase db = usdbh.getWritableDatabase();
+        return db;
+    }
+
     public CrudRol(Context contexto) {
         super(contexto);
         this.context = contexto;
@@ -15,8 +21,7 @@ public class CrudRol extends MRSQLiteHelper {
 
     //CREATE.
     public long insertar(String nombreRol) {
-        MRSQLiteHelper usdbh = new MRSQLiteHelper(context);
-        SQLiteDatabase db = usdbh.getWritableDatabase();
+        SQLiteDatabase db = returnDb();
 
         ContentValues values = new ContentValues();
         values.put("nombre_rol", nombreRol);
@@ -28,8 +33,7 @@ public class CrudRol extends MRSQLiteHelper {
 
     //UPDATE
     public int actualizar(int idRol, String nuevoNombreRol) {
-        MRSQLiteHelper usdbh = new MRSQLiteHelper(context);
-        SQLiteDatabase db = usdbh.getWritableDatabase();
+        SQLiteDatabase db = returnDb();
 
         // Verificar si el rol con el ID proporcionado existe
         Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Rol WHERE id_rol = ?", new String[]{String.valueOf(idRol)});
@@ -57,8 +61,7 @@ public class CrudRol extends MRSQLiteHelper {
 
     //DELETE
     public int eliminar(int idRol) {
-        MRSQLiteHelper usdbh = new MRSQLiteHelper(context);
-        SQLiteDatabase db = usdbh.getWritableDatabase();
+        SQLiteDatabase db = returnDb();
 
         // Verificar si el rol con el ID proporcionado existe antes de eliminarlo
         Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Rol WHERE id_rol = ?", new String[]{String.valueOf(idRol)});

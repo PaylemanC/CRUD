@@ -1,5 +1,6 @@
 package com.example.crud;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -34,6 +35,13 @@ public class MRSQLiteHelper extends SQLiteOpenHelper {
             String tableSQL = tables[i][0];
             db.execSQL(tableSQL);
         }
+            ContentValues socio = new ContentValues();
+            socio.put("nombre_rol", "socio");
+            db.insert("Rol", null, socio);
+
+            ContentValues trainer = new ContentValues();
+            trainer.put("nombre_rol", "entrenador");
+            db.insert("Rol", null, trainer);
     }
 
     @Override

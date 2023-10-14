@@ -3,49 +3,91 @@ package com.example.crud;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private EditText txtReg;
+    private EditText txtVal;
+    private Button btnInsertar;
+    private Button btnActualizar;
+    private TextView txtResultado;
+    private CrudRol crudRol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MRSQLiteHelper usdbh = new MRSQLiteHelper(this);
-        SQLiteDatabase db = usdbh.getWritableDatabase();
+        txtReg = findViewById(R.id.txtReg);
+        txtVal = findViewById(R.id.txtVal);
+        btnInsertar = findViewById(R.id.btnInsertar);
+        txtResultado = findViewById(R.id.txtResultado);
 
-        //Si hemos abierto correctamente la base de datos...
-        if(db != null) {
-            for(int i=1; i<=3; i++) {
-                String username = "Username " + i;
 
-                ContentValues usuario = new ContentValues();
-                usuario.put("username", username);
-                usuario.put("id_rol", 1);
-                db.insert("Usuario", null, usuario);
+        crudRol = new CrudRol(this);
+
+//        MRSQLiteHelper usdbh = new MRSQLiteHelper(this);
+//        SQLiteDatabase db = usdbh.getWritableDatabase();
+
+        btnInsertar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String nombreRol = txtVal.getText().toString();
+                long id = crudRol.insertar(nombreRol);
+
+                if (id != -1) {
+                    txtResultado.setText("Registro insertado con ID: " + id);
+                } else {
+                    txtResultado.setText("Error al insertar el registro.");
+                }
             }
+        });
 
-            ContentValues usuarioSocio = new ContentValues();
-            usuarioSocio.put("username", "Usuario Socio");
-            usuarioSocio.put("id_rol", 1);
-            db.insert("Usuario", null, usuarioSocio);
 
-            ContentValues usuarioEntrenador = new ContentValues();
-            usuarioEntrenador.put("username", "Usuario Entrenador");
-            usuarioEntrenador.put("id_rol", 2);
-            db.insert("Usuario", null, usuarioEntrenador);
+        btnActualizar = findViewById(R.id.btnActualizar);
+        btnActualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String nombreRol = txtVal.getText().toString(); // Obtén el nuevo valor del rol
+                int idRol = Integer.parseInt(txtReg.getText().toString()); // Obtén el ID del rol desde el campo "txtIdRol"
 
-            ContentValues nuevoSocio = new ContentValues();
-            nuevoSocio.put("id_usuario", 4);
-            db.insert("Socio", null, nuevoSocio);
+                int registrosActualizados = crudRol.actualizar(idRol, nombreRol); // Llama al método de actualización
 
-            ContentValues nuevoEntrenador = new ContentValues();
-            nuevoEntrenador.put("id_usuario", 5);
-            db.insert("Entrenador", null, nuevoEntrenador);
+                if (registrosActualizados > 0) {
+                    txtResultado.setText("Se actualizaron " + registrosActualizados + " registro(s).");
+                } else {
+                    txtResultado.setText("Ningún registro se actualizó.");
+                }
+            }
+        });
 
-            //Cerramos la base de datos
-            db.close();
+        Button btnEliminar = findViewById(R.id.btnEliminar);
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String nombreRol = txtVal.getText().toString(); // Obtén el nuevo valor del rol
+                int idRol = Integer.parseInt(txtReg.getText().toString()); // Obtén el ID del rol desde el campo "txtIdRol"
+
+                //aca llamar al  método de eliminación
+                int registrosEliminados = crudRol.eliminar(idRol); // Llama al método de eliminación
+
+                if (registrosEliminados > 0) {
+                    txtResultado.setText("Se eliminaron " + registrosEliminados + " registro(s).");
+                } else {
+                    txtResultado.setText("Ningún registro se eliminó.");
+                }
+            }
+        });
+
+
+
+
+
+
         }
     }
-}

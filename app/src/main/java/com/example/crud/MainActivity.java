@@ -26,14 +26,6 @@ public class MainActivity extends AppCompatActivity {
                 db.insert("Usuario", null, usuario);
             }
 
-//            ContentValues socio = new ContentValues();
-//            socio.put("nombre_rol", "socio");
-//            db.insert("Rol", null, socio);
-//
-//            ContentValues trainer = new ContentValues();
-//            trainer.put("nombre_rol", "entrenador");
-//            db.insert("Rol", null, trainer);
-
             ContentValues usuarioSocio = new ContentValues();
             usuarioSocio.put("username", "Usuario Socio");
             usuarioSocio.put("id_rol", 1);

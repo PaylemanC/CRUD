@@ -1,8 +1,6 @@
 package com.example.crud;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void btnMainSocio(View view){
-        Intent intent=new Intent(MainActivity.this,socio.class);
+        Intent intent=new Intent(MainActivity.this, SocioActivity.class);
         startActivity(intent);
     }
 

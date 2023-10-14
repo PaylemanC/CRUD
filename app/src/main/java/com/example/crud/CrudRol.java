@@ -31,9 +31,9 @@ public class CrudRol extends MRSQLiteHelper {
         return id;
     }
 
-    public int returnId (int idRol) {
+    public int returnId (int idRol, String tabla, String campo) {
         SQLiteDatabase db = returnDb();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Rol WHERE id_rol = ?", new String[]{String.valueOf(idRol)});
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tabla + " WHERE " + campo + " = ?", new String[]{String.valueOf(idRol)});
         cursor.moveToFirst();
         int rowCount = cursor.getInt(0);
         cursor.close();
@@ -44,7 +44,7 @@ public class CrudRol extends MRSQLiteHelper {
     //UPDATE
     public int actualizar(int idRol, String nuevoNombreRol) {
         SQLiteDatabase db = returnDb();
-        int rowCount = returnId(idRol);
+        int rowCount = returnId(idRol, "Rol", "id_rol");
 
         if (rowCount > 0) {
             // El rol con el ID proporcionado existe, procede con la actualización
@@ -67,7 +67,7 @@ public class CrudRol extends MRSQLiteHelper {
     //DELETE
     public int eliminar(int idRol) {
         SQLiteDatabase db = returnDb();
-        int rowCount = returnId(idRol);
+        int rowCount = returnId(idRol, "Rol", "id_rol");
 
         if (rowCount > 0) {
             // El rol con el ID proporcionado existe, procede con la eliminación

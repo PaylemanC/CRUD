@@ -13,8 +13,11 @@ public class MRSQLiteHelper extends SQLiteOpenHelper {
     String[][] tables = new String[4][2]; //Esto después cambia a la cantidad de tablas total: [12][2]
 
     public MRSQLiteHelper(Context contexto) {
-
         super(contexto, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
         tables[0][0] = "CREATE TABLE Rol (id_rol INTEGER PRIMARY KEY AUTOINCREMENT, nombre_rol CHAR(10) NOT NULL)";
         tables[0][1] = "Rol";
 
@@ -27,21 +30,17 @@ public class MRSQLiteHelper extends SQLiteOpenHelper {
         tables[3][0] = "CREATE TABLE Entrenador (id_entrenador INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, id_usuario INTEGER, FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario))";
         tables[3][1] = "Entrenador";
 
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
         for(int i = 0; i < tables.length; i++) {
             String tableSQL = tables[i][0];
             db.execSQL(tableSQL);
         }
-            ContentValues socio = new ContentValues();
-            socio.put("nombre_rol", "socio");
-            db.insert("Rol", null, socio);
+        ContentValues socio = new ContentValues();
+        socio.put("nombre_rol", "socio");
+        db.insert("Rol", null, socio);
 
-            ContentValues trainer = new ContentValues();
-            trainer.put("nombre_rol", "entrenador");
-            db.insert("Rol", null, trainer);
+        ContentValues trainer = new ContentValues();
+        trainer.put("nombre_rol", "entrenador");
+        db.insert("Rol", null, trainer);
     }
 
     @Override

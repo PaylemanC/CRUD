@@ -6,23 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class CrudRol extends MRSQLiteHelper {
-    Context context;
-
-    public SQLiteDatabase returnDb() {
-        MRSQLiteHelper usdbh = new MRSQLiteHelper(context);
-        SQLiteDatabase db = usdbh.getWritableDatabase();
-        return db;
-    }
+    Context contexto;
 
     public CrudRol(Context contexto) {
         super(contexto);
-        this.context = contexto;
+        this.contexto = contexto;
     }
 
     //CREATE.
     public long insertar(String nombreRol) {
-        SQLiteDatabase db = returnDb();
-
+        SQLiteDatabase db = super.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("nombre_rol", nombreRol);
 
@@ -32,7 +25,7 @@ public class CrudRol extends MRSQLiteHelper {
     }
 
     public int returnId (int idRol, String tabla, String campo) {
-        SQLiteDatabase db = returnDb();
+        SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tabla + " WHERE " + campo + " = ?", new String[]{String.valueOf(idRol)});
         cursor.moveToFirst();
         int rowCount = cursor.getInt(0);
@@ -43,7 +36,7 @@ public class CrudRol extends MRSQLiteHelper {
 
     //UPDATE
     public int actualizar(int idRol, String nuevoNombreRol) {
-        SQLiteDatabase db = returnDb();
+        SQLiteDatabase db = super.getWritableDatabase();
         int rowCount = returnId(idRol, "Rol", "id_rol");
 
         if (rowCount > 0) {
@@ -66,7 +59,7 @@ public class CrudRol extends MRSQLiteHelper {
 
     //DELETE
     public int eliminar(int idRol) {
-        SQLiteDatabase db = returnDb();
+        SQLiteDatabase db = super.getWritableDatabase();
         int rowCount = returnId(idRol, "Rol", "id_rol");
 
         if (rowCount > 0) {

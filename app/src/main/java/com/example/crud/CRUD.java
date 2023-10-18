@@ -38,9 +38,9 @@ public class CRUD extends MRSQLiteHelper {
 
     // "TABLE Socio (id_socio INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, id_usuario INTEGER, FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario))";
 
-    private int returnId (int idRol, String tabla, String campo) {
+    private int returnId (int idUsuario, String tabla, String campo) {
         SQLiteDatabase db = super.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tabla + " WHERE " + campo + " = ?", new String[]{String.valueOf(idRol)});
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tabla + " WHERE " + campo + " = ?", new String[]{String.valueOf(idUsuario)});
         cursor.moveToFirst();
         int rowCount = cursor.getInt(0);
         cursor.close();
@@ -48,46 +48,42 @@ public class CRUD extends MRSQLiteHelper {
         return rowCount;
     }
 
+//--------------------NO PRIORIDAD--------------------------------
+
     //UPDATE
-    public int actualizar(int idRol, String nuevoNombreRol) {
-        SQLiteDatabase db = super.getWritableDatabase();
-        int rowCount = returnId(idRol, "Rol", "id_rol");
-
-        if (rowCount > 0) {
-            // El rol con el ID proporcionado existe, procede con la actualización
-            ContentValues values = new ContentValues();
-            values.put("nombre_rol", nuevoNombreRol);
-
-            int registrosActualizados = db.update("Rol", values, "id_rol = ?", new String[]{String.valueOf(idRol)});
-
-            // Cierra la base de datos después de la operación
-            db.close();
-
-            return registrosActualizados;
-        } else {
-            // El rol con el ID proporcionado no existe, no se puede actualizar
-            db.close();
-            return 0; // O un valor que indique que no se realizó la actualización
-        }
-    }
+//    public int actualizar(int idUsuario, String nuevoNombreRol) {
+//        SQLiteDatabase db = super.getWritableDatabase();
+//        int rowCount = returnId(idUsuario, "Usuario", "id_usuario");
+//
+//        if (rowCount > 0) {
+//
+//
+//            db.close();
+//            return 1;
+//        } else {
+//
+//
+//            return 0; // O un valor que indique que no se realizó la actualización
+//        }
+//    }
 
     //DELETE
-    public int eliminar(int idRol) {
-        SQLiteDatabase db = super.getWritableDatabase();
-        int rowCount = returnId(idRol, "Rol", "id_rol");
-
-        if (rowCount > 0) {
-            // El rol con el ID proporcionado existe, procede con la eliminación
-            int registrosEliminados = db.delete("Rol", "id_rol = ?", new String[]{String.valueOf(idRol)});
-
-            // Cierra la base de datos después de la operación
-            db.close();
-
-            return registrosEliminados;
-        } else {
-            // El rol con el ID proporcionado no existe, no se puede eliminar
-            db.close();
-            return 0; // O un valor que indique que no se realizó la eliminación
-        }
-    }
+//    public int eliminarUsuario(int idUsuario) {
+//        SQLiteDatabase db = super.getWritableDatabase();
+//        int rowCount = returnId(idUsuario, "Usuario", "id_usuario");
+//
+//        if (rowCount > 0) {
+//            // El usuario con el ID proporcionado existe, procede con la eliminación
+//            int usuarioEliminado = db.delete("Usuario", "id_usuario = ?", new String[]{String.valueOf(idUsuario)});
+//
+//            // Cierra la base de datos después de la operación
+//            db.close();
+//
+//            return usuarioEliminado;
+//        } else {
+//            // El rol con el ID proporcionado no existe, no se puede eliminar
+//            db.close();
+//            return 0; // O un valor que indique que no se realizó la eliminación
+//        }
+//    }
 }

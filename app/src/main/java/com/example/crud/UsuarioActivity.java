@@ -21,8 +21,8 @@ public class UsuarioActivity extends AppCompatActivity {
     private EditText textPassword;
 
     private Button btnInsertar;
-    private Button btnActualizar;
-    private Button btnEliminar;
+   // private Button btnActualizar;
+   // private Button btnEliminar;
 
     private TextView textoResultado;
 
@@ -40,8 +40,8 @@ public class UsuarioActivity extends AppCompatActivity {
         textPassword = findViewById(R.id.textPassword);
 
         btnInsertar = findViewById(R.id.btnInsertar);
-        btnActualizar = findViewById(R.id.btnActualizar);
-        btnEliminar = findViewById(R.id.btnEliminar);
+       // btnActualizar = findViewById(R.id.btnActualizar);
+       // btnEliminar = findViewById(R.id.btnEliminar);
 
         textoResultado = findViewById(R.id.textoResultado);
 

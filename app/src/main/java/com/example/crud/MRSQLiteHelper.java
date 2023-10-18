@@ -46,11 +46,6 @@ public class MRSQLiteHelper extends SQLiteOpenHelper {
         ContentValues trainer = new ContentValues();
         trainer.put("nombre_rol", "entrenador");
         db.insert("Rol", null, trainer);
-
-        ContentValues usuario = new ContentValues();
-        usuario.put("id_rol", 1);
-        usuario.put("email", "example@misrutinas.com");
-        db.insert("Usuario", null, usuario);
     }
 
     @Override

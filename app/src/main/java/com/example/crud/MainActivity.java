@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void btnMainSocio(View view){
-        Intent intent=new Intent(MainActivity.this, SocioActivity.class);
+        Intent intent=new Intent(MainActivity.this, UsuarioActivity.class);
         startActivity(intent);
     }
 

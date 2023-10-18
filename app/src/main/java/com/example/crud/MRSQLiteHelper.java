@@ -21,7 +21,7 @@ public class MRSQLiteHelper extends SQLiteOpenHelper {
         tables[0][0] = "CREATE TABLE Rol (id_rol INTEGER PRIMARY KEY AUTOINCREMENT, nombre_rol CHAR(10) NOT NULL)";
         tables[0][1] = "Rol";
 
-        tables[1][0] = "CREATE TABLE Usuario (id_usuario INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username VARCHAR(45) NOT NULL, apellido VARCHAR(45), nombre VARCHAR(45), dni INTEGER, fec_nac DATE, email VARCHAR(45), pass VARCHAR(45), active BOOLEAN, id_rol INTEGER, FOREIGN KEY (id_rol) REFERENCES Rol(id_rol))";
+        tables[1][0] = "CREATE TABLE Usuario (id_usuario INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username VARCHAR(45) , apellido VARCHAR(45), nombre VARCHAR(45), dni INTEGER,  email VARCHAR(75) NOT NULL,tel INTEGER, pass VARCHAR(45), active BOOLEAN, id_rol INTEGER, FOREIGN KEY (id_rol) REFERENCES Rol(id_rol))";
         tables[1][1] = "Usuario";
 
         tables[2][0] = "CREATE TABLE Socio (id_socio INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, id_usuario INTEGER, FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario))";
@@ -34,6 +34,11 @@ public class MRSQLiteHelper extends SQLiteOpenHelper {
             String tableSQL = tables[i][0];
             db.execSQL(tableSQL);
         }
+
+        ContentValues admin = new ContentValues();
+        admin.put("nombre_rol", "admin");
+        db.insert("Rol", null, admin);
+
         ContentValues socio = new ContentValues();
         socio.put("nombre_rol", "socio");
         db.insert("Rol", null, socio);
@@ -41,6 +46,11 @@ public class MRSQLiteHelper extends SQLiteOpenHelper {
         ContentValues trainer = new ContentValues();
         trainer.put("nombre_rol", "entrenador");
         db.insert("Rol", null, trainer);
+
+        ContentValues usuario = new ContentValues();
+        usuario.put("id_rol", 1);
+        usuario.put("email", "example@misrutinas.com");
+        db.insert("Usuario", null, usuario);
     }
 
     @Override

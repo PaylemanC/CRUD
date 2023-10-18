@@ -73,10 +73,17 @@
         android:text="" />
 
     <Button
+        android:id="@+id/btnActivity_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ir a USUARIOS"
+        android:onClick="btnMainUsuario"/>
+
+    <Button
         android:id="@+id/btnActivity_socios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ir a socios"
+        android:text="Ir a SOCIOS"
         android:onClick="btnMainSocio"
         />
 </LinearLayout>

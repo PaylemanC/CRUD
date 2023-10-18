@@ -18,9 +18,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtResultado;
     private CrudRol crudRol;
 
+    public void btnMainUsuario(View view){
+        Intent intent=new Intent(MainActivity.this, UsuarioActivity.class);
+        startActivity(intent);
+    }
 
     public void btnMainSocio(View view){
-        Intent intent=new Intent(MainActivity.this, UsuarioActivity.class);
+        Intent intent=new Intent(MainActivity.this, SocioActivity.class);
         startActivity(intent);
     }
 

@@ -48,6 +48,33 @@ public class CRUD extends MRSQLiteHelper {
         return rowCount;
     }
 
+    public long insertarSocio(String nombre, String apellido, String dni, String email, String telefono) {
+        SQLiteDatabase db = super.getWritableDatabase();
+
+        ContentValues valuesUser = new ContentValues();
+        valuesUser.put("nombre", nombre); //NULL
+        valuesUser.put("apellido", apellido); //NULL
+        valuesUser.put("dni", dni); //NULL
+        valuesUser.put("email", email); //NOT NULL
+        valuesUser.put("tel", telefono); //NOT NULL
+        valuesUser.put("id_rol", 2); //NOT NULL
+
+        long idUsuario = db.insert("Usuario", null, valuesUser);
+
+        if (idUsuario != -1) {
+            ContentValues valuesSocio = new ContentValues();
+            valuesSocio.put("id_usuario", idUsuario);
+            long idSocio = db.insert("Socio", null, valuesSocio);
+
+            db.close();
+
+            return idSocio;
+        } else {
+            db.close();
+            return -1;
+        }
+    }
+
 //--------------------NO PRIORIDAD--------------------------------
 
     //UPDATE

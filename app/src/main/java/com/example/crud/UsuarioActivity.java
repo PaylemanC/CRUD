@@ -53,7 +53,12 @@ public class UsuarioActivity extends AppCompatActivity {
                 String email = textEmail.getText().toString();
                 String password = textPassword.getText().toString();
 
-                long id = crud.insertarUsuario(username, email, password, null, null, null);
+                String nombre = textNombre.getText().toString();
+                String apellido = textApellido.getText().toString();
+                String dniString = textDNI.getText().toString();
+                Integer dni = Integer.parseInt(dniString);
+
+                long id = crud.insertarUsuario(username, email, password, nombre, apellido, dni);
 
                 if (id != -1) {
                     textoResultado.setText("Registro insertado con ID: " + id);

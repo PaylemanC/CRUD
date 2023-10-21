@@ -37,13 +37,14 @@ public class CRUD extends MRSQLiteHelper {
     //"TABLE Usuario (id_usuario INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username VARCHAR(45) , apellido VARCHAR(45), nombre VARCHAR(45), dni INTEGER,  email VARCHAR(75) NOT NULL,tel INTEGER, pass VARCHAR(45), active BOOLEAN, id_rol INTEGER, FOREIGN KEY (id_rol) REFERENCES Rol(id_rol))";
     // username --> + UNIQUE, VARCHAR 20
     // pass --> VARCHAR 24
+    // dni --> + UNIQUE
 
     public long insertarUsuario(String username, String email, String password, String nombre, String apellido, String dni) {
         if (!areFieldsValid(
                 new FieldLengthValidation(username, 4, 20),
                 new FieldLengthValidation(email, 8, 75),
                 new FieldLengthValidation(password, 8, 24)
-        )) {
+        ) || !isValidEmail(email)) {
             return -1;
         }
 //        if ((!dni.isEmpty() || dni != null) && dni.length() != 8) {
@@ -91,7 +92,7 @@ public class CRUD extends MRSQLiteHelper {
                 new FieldLengthValidation(dni, 8, 8),
                 new FieldLengthValidation(email, 8, 75),
                 new FieldLengthValidation(telefono, 10, 10)
-        )) {
+        ) || !isValidEmail(email)) {
             return -1;
         }
         SQLiteDatabase db = super.getWritableDatabase();

@@ -85,6 +85,15 @@ public class CRUD extends MRSQLiteHelper {
     }
 
     public long insertarSocio(String nombre, String apellido, String dni, String email, String telefono) {
+        if (!areFieldsValid(
+                new FieldLengthValidation(nombre, 1, 45),
+                new FieldLengthValidation(apellido, 1, 45),
+                new FieldLengthValidation(dni, 8, 8),
+                new FieldLengthValidation(email, 8, 75),
+                new FieldLengthValidation(telefono, 10, 10)
+        )) {
+            return -1;
+        }
         SQLiteDatabase db = super.getWritableDatabase();
 
         ContentValues valuesUser = new ContentValues();

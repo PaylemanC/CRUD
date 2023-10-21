@@ -15,9 +15,13 @@ public class CRUD extends MRSQLiteHelper {
 
 //---------------------------------
     //VALIDACIONES:
-    private boolean areFieldsValid(String... fields) {
-        for (String field : fields) {
-            if (field == null || field.isEmpty()) {
+    private boolean areFieldsValid(FieldLengthValidation... fields) {
+        for (FieldLengthValidation fieldValidation : fields) {
+            String field = fieldValidation.field;
+            int minLength = fieldValidation.minLength;
+            int maxLength = fieldValidation.maxLength;
+
+            if (field != null && (field.length() < minLength || field.length() > maxLength)) {
                 return false;
             }
         }
@@ -35,9 +39,16 @@ public class CRUD extends MRSQLiteHelper {
     // pass --> VARCHAR 24
 
     public long insertarUsuario(String username, String email, String password, String nombre, String apellido, String dni) {
-        if (!areFieldsValid(username, email, password) || !isValidEmail(email)) {
+        if (!areFieldsValid(
+                new FieldLengthValidation(username, 4, 20),
+                new FieldLengthValidation(email, 8, 75),
+                new FieldLengthValidation(password, 8, 24)
+        )) {
             return -1;
         }
+//        if ((!dni.isEmpty() || dni != null) && dni.length() != 8) {
+//            return -1;
+//        }
 
         SQLiteDatabase db = super.getWritableDatabase();
 

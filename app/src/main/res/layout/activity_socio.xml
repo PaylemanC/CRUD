@@ -10,14 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nombre*"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:maxLength="45"/>
 
     <EditText
         android:id="@+id/textApellido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Apellido*"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:maxLength="45"/>
 
     <EditText
         android:id="@+id/textDNI"
@@ -26,9 +28,8 @@
         android:ems="10"
         android:hint="DNI*"
         android:inputType="number"
-        android:textSize="20dp" />
-
-
+        android:textSize="20dp"
+        android:maxLength="8"/>
 
     <EditText
         android:id="@+id/textEmail"
@@ -45,7 +46,8 @@
         android:textSize="20dp"
         android:hint="Telefono*"
         android:ems="10"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:maxLength="10"/>
 
     <Button
         android:id="@+id/btnInsertar"
@@ -54,18 +56,17 @@
         android:text="Insertar" />
 
 
-        <Button
-            android:id="@+id/btnActualizar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Actualizar" />
+    <Button
+        android:id="@+id/btnActualizar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Actualizar" />
 
-        <Button
-            android:id="@+id/btnEliminar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Eliminar" />
-
+    <Button
+        android:id="@+id/btnEliminar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Eliminar" />
 
     <!--    <Button-->
     <!--        android:id="@+id/btnConsultar"-->
@@ -73,15 +74,11 @@
     <!--        android:layout_height="wrap_content"-->
     <!--        android:text="Consultar" />-->
 
-
-
     <TextView
         android:id="@+id/textoResultado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:text="" />
-
-
 
 </LinearLayout>

@@ -13,27 +13,52 @@ public class CRUD extends MRSQLiteHelper {
         this.context = contexto;
     }
 
+//---------------------------------
+    //VALIDACIONES:
+    private boolean areFieldsValid(String... fields) {
+        for (String field : fields) {
+            if (field == null || field.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        return email.matches(emailRegex);
+    }
+
 //---------------------------------------------------------------
     //"TABLE Usuario (id_usuario INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username VARCHAR(45) , apellido VARCHAR(45), nombre VARCHAR(45), dni INTEGER,  email VARCHAR(75) NOT NULL,tel INTEGER, pass VARCHAR(45), active BOOLEAN, id_rol INTEGER, FOREIGN KEY (id_rol) REFERENCES Rol(id_rol))";
+    // username --> + UNIQUE, VARCHAR 20
+    // pass --> VARCHAR 24
 
-    //CREATE USUARIO.
     public long insertarUsuario(String username, String email, String password, String nombre, String apellido, String dni) {
+        if (!areFieldsValid(username, email, password) || !isValidEmail(email)) {
+            return -1;
+        }
+
         SQLiteDatabase db = super.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put("username", username); //NOT NULL
-        values.put("email", email); //NOT NULL
-        values.put("pass", password); //NOT NULL
-        values.put("nombre", nombre); //NULL
-        values.put("apellido", apellido); //NULL
-        values.put("dni", dni); //NULL
-        values.put("id_rol", 1); //NOT NULL
+        try {
+            ContentValues values = new ContentValues();
+            values.put("username", username); //NOT NULL
+            values.put("email", email); //NOT NULL
+            values.put("pass", password); //NOT NULL
+            values.put("nombre", nombre); //NULL
+            values.put("apellido", apellido); //NULL
+            values.put("dni", dni); //NULL
+            values.put("id_rol", 1); //NOT NULL
 
-        long idUsuario = db.insert("Usuario", null, values);
+            long idUsuario = db.insert("Usuario", null, values);
 
-        db.close();
-
-        return idUsuario;
+            return idUsuario;
+        } catch (Exception e) {
+            return -1;
+        } finally {
+            db.close();
+        }
     }
 
     // "TABLE Socio (id_socio INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, id_usuario INTEGER, FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario))";

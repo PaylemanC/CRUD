@@ -74,9 +74,9 @@ public class CRUD extends MRSQLiteHelper {
 
     // "TABLE Socio (id_socio INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, id_usuario INTEGER, FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario))";
 
-    private int returnId (int idUsuario, String tabla, String campo) {
+    private int returnId (int id, String tabla, String campo) {
         SQLiteDatabase db = super.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tabla + " WHERE " + campo + " = ?", new String[]{String.valueOf(idUsuario)});
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tabla + " WHERE " + campo + " = ?", new String[]{String.valueOf(id)});
         cursor.moveToFirst();
         int rowCount = cursor.getInt(0);
         cursor.close();

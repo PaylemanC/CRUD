@@ -28,14 +28,17 @@ public class CRUD extends MRSQLiteHelper {
         return true;
     }
 
-    private boolean isValidEmail(String email) {
+    private boolean isValidEmail(SQLiteDatabase db, String email) {
         String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-        return email.matches(emailRegex);
+        if (email.matches(emailRegex) && !existeRegistro(db, email, "email")) {
+            return true;
+        }
+        return false;
     }
 
-    private boolean existeUsuario(SQLiteDatabase db, String username) {
-        String[] columns = {"username"};
-        String selection = "username = ?";
+    private boolean existeRegistro(SQLiteDatabase db, String username, String columna) {
+        String[] columns = {columna};
+        String selection = columna + "= ?";
         String[] selectionArgs = {username};
 
         Cursor cursor = db.query("Usuario", columns, selection, selectionArgs, null, null, null);
@@ -56,11 +59,12 @@ public class CRUD extends MRSQLiteHelper {
     public long insertarUsuario(String username, String email, String password, String nombre, String apellido, String dni) {
         SQLiteDatabase db = super.getWritableDatabase();
 
+
         if (!areFieldsValid(
                 new FieldLengthValidation(username, 4, 20),
                 new FieldLengthValidation(email, 8, 75),
                 new FieldLengthValidation(password, 8, 24)
-        ) || !isValidEmail(email) || existeUsuario(db, username))  {
+        ) || !isValidEmail(db, email) ||  existeRegistro(db, username, "username"))  {
             db.close();
             return -1;
         }
@@ -105,16 +109,18 @@ public class CRUD extends MRSQLiteHelper {
     }
 
     public long insertarSocio(String nombre, String apellido, String dni, String email, String telefono) {
+        SQLiteDatabase db = super.getWritableDatabase();
+
         if (!areFieldsValid(
                 new FieldLengthValidation(nombre, 1, 45),
                 new FieldLengthValidation(apellido, 1, 45),
                 new FieldLengthValidation(dni, 8, 8),
                 new FieldLengthValidation(email, 8, 75),
                 new FieldLengthValidation(telefono, 10, 10)
-        ) || !isValidEmail(email)) {
+        ) || !isValidEmail(db, email)) {
+            db.close();
             return -1;
         }
-        SQLiteDatabase db = super.getWritableDatabase();
 
         ContentValues valuesUser = new ContentValues();
         valuesUser.put("nombre", nombre); //NULL

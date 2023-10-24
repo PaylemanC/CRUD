@@ -33,6 +33,19 @@ public class CRUD extends MRSQLiteHelper {
         return email.matches(emailRegex);
     }
 
+    private boolean existeUsuario(SQLiteDatabase db, String username) {
+        String[] columns = {"username"};
+        String selection = "username = ?";
+        String[] selectionArgs = {username};
+
+        Cursor cursor = db.query("Usuario", columns, selection, selectionArgs, null, null, null);
+
+        boolean existe = cursor.moveToFirst();
+        cursor.close();
+
+        return existe;
+    }
+
 
 //---------------------------------------------------------------
     //"TABLE Usuario (id_usuario INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username VARCHAR(45) , apellido VARCHAR(45), nombre VARCHAR(45), dni INTEGER,  email VARCHAR(75) NOT NULL,tel INTEGER, pass VARCHAR(45), active BOOLEAN, id_rol INTEGER, FOREIGN KEY (id_rol) REFERENCES Rol(id_rol))";
@@ -41,18 +54,23 @@ public class CRUD extends MRSQLiteHelper {
     // dni --> + UNIQUE
 
     public long insertarUsuario(String username, String email, String password, String nombre, String apellido, String dni) {
+        SQLiteDatabase db = super.getWritableDatabase();
+
         if (!areFieldsValid(
                 new FieldLengthValidation(username, 4, 20),
                 new FieldLengthValidation(email, 8, 75),
                 new FieldLengthValidation(password, 8, 24)
-        ) || !isValidEmail(email)) {
+        ) || !isValidEmail(email) || existeUsuario(db, username))  {
+            db.close();
             return -1;
         }
+
+
 //        if ((!dni.isEmpty() || dni != null) && dni.length() != 8) {
 //            return -1;
 //        }
 
-        SQLiteDatabase db = super.getWritableDatabase();
+
 
         try {
             ContentValues values = new ContentValues();

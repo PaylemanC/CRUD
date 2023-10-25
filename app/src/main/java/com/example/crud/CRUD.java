@@ -36,10 +36,10 @@ public class CRUD extends MRSQLiteHelper {
         return false;
     }
 
-    private boolean existeRegistro(SQLiteDatabase db, String username, String columna) {
+    private boolean existeRegistro(SQLiteDatabase db, String value, String columna) {
         String[] columns = {columna};
         String selection = columna + "= ?";
-        String[] selectionArgs = {username};
+        String[] selectionArgs = {value};
 
         Cursor cursor = db.query("Usuario", columns, selection, selectionArgs, null, null, null);
 
